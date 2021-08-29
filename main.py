@@ -12,7 +12,7 @@ class Student:
         if (isinstance(lecturer, Lecturer) and course in self.courses_in_progress and
                 course in lecturer.courses_attached):
             mylist[course] = rate
-            lectur.assessment_lecturer.append(mylist)
+            lecturer.assessment_lecturer.append(mylist)
         else:
             return 'Ошибка'
 
@@ -28,6 +28,15 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.assessment_lecturer = []
 
+    def average_rating(self):
+        mylist = []
+        for i in self.assessment_lecturer:
+            for score in i.values():
+                mylist.append(score)
+        average_rating = sum(mylist) / len(mylist)
+        return average_rating
+
+
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
@@ -39,10 +48,16 @@ class Reviewer(Mentor):
             return 'Ошибка'
 
 
+
+
+
 student = Student('Dmitrij', 'Sazhin', 'man')
 student.courses_in_progress += ['python']
 lectur = Lecturer('Oleg', 'Bulygin')
 lectur.courses_attached += ['python']
 student.rate_lecturer(lectur, 'python', 10)
-print(lectur.assessment_lecturer)
-
+a = Student('Q', 'O', 'b')
+a.courses_in_progress = ['python']
+a.rate_lecturer(lectur, 'python', 9)
+lectur.average_rating()
+print(lectur.average_rating())
