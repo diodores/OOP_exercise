@@ -50,7 +50,6 @@ class Student:
         return res
 
 
-
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
@@ -61,7 +60,6 @@ class Mentor:
 class Lecturer(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
-        # self.assessment_lecturer = []
         self.grades = {}
 
     def average_rating(self):
@@ -90,6 +88,7 @@ class Lecturer(Mentor):
     def __str__(self):
         res = f' some_lecturer\n Имя: {self.name}\n Фамилия: {self.surname}\n Средняя оценка за лекции: {self.average_rating()}'
         return res
+
 
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
@@ -141,17 +140,56 @@ reviewer_2.rate_hw(student_1, 'git', 7)
 student_1.average_rating()
 student_2.average_rating()
 print(student_1 < student_2)
-print()
+print('*********************')
 print(f'{student_1}\n')
 print(student_2)
-print()
+print('*********************')
 print(lecturer_1.average_rating())
 print(lecturer_2.average_rating())
-print()
+print('*********************')
 print(lecturer_2 < lecturer_1)
-print()
+print('*********************')
 print(f'{lecturer_1}\n')
 print(f'{lecturer_1}\n')
 print(f'{reviewer_1}\n')
 print(reviewer_2)
+print('*********************')
+
+students = [student_1, student_2]
+
+def average_score_HW(students, course):
+    """Возвращает общий средний балл за курс"""
+    mylist = []
+    for student in students:
+        if student.grades.get(course) != None:
+            for i in student.grades.get(course):
+                mylist.append(i)
+        else:
+            pass
+    average_score_HW = sum(mylist) / len(mylist)
+    return average_score_HW
+
+average_score_HW = average_score_HW(students, course='python')
+print(f'Общий средний бал по курсу "python" составил: {average_score_HW}')
+print('*******************')
+
+lecturers = [lecturer_1, lecturer_2]
+
+def average_score_L(lecturers, course):
+    """Возвращает общий средний балл за курс лекторам"""
+    mylist = []
+    for lecturer in lecturers:
+        if lecturer.grades.get(course) != None:
+            for i in lecturer.grades.get(course):
+                mylist.append(i)
+        else:
+            pass
+    average_score_L = sum(mylist) / len(mylist)
+    return average_score_L
+
+average_score_L = average_score_L(lecturers, 'git')
+print(f'Общий средний бал по курсу "git" поставленный лекторам составил: {average_score_HW}')
+
+
+
 
